@@ -4,8 +4,8 @@ import { t, Elysia } from 'elysia';
 import { cors } from "@elysiajs/cors";
 import { swagger } from '@elysiajs/swagger';
 
-// import crypto from 'crypto';
-import logger from 'logixlysia';
+// import logger from 'logixlysia';
+import logixlysia from 'logixlysia';
 import { rateLimit } from "elysia-rate-limit";
 
 import { authRoutes } from './routes/auth.route.js';
@@ -79,7 +79,26 @@ const app = new Elysia()
             profile: await jwt.verify(refreshToken.value)
         };
     })
-    .use(logger())
+    .use(logixlysia(
+        {
+            // เพิ่มระบบ logging
+            config: {
+                showStartupMessage: true,
+                startupMessageFormat: 'banner',
+                timestamp: {
+                    translateTime: 'yyyy-mm-dd HH:MM:ss'
+                },
+                ip: true,
+                logFilePath: `./logs/information.log`,
+                customLogFormat:
+                    '🦊 {now} {level} {duration} {method} {pathname} {status} {message} {ip} {epoch}',
+                logFilter: {
+                    level: ['ERROR', 'WARNING', 'INFO'],
+                    method: ['GET', 'POST', 'PUT', 'DELETE']
+                }
+            },
+        }
+    ))
     .use(cors({ origin: true }));
 
 // Create v1 group for API routes
