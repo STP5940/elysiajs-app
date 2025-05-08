@@ -11,7 +11,7 @@ export const userRoutes = (app) => {
     app.get('/users', getUsers, {
         detail: {
             operationId: 'getAllUsers',
-            summary: "/v1/users",
+            summary: "/users",
             description: "Get Users All",
             tags: ["Users"],
         },
@@ -40,7 +40,7 @@ export const userRoutes = (app) => {
     app.get('/users/:id', getUserById, {
         detail: {
             operationId: 'getUserById',
-            summary: "/v1/users/:id",
+            summary: "/users/:id",
             description: "Get User by ID",
             tags: ["Users"],
         },
@@ -72,7 +72,7 @@ export const userRoutes = (app) => {
     }, {
         detail: {
             operationId: 'createUser',
-            summary: "/v1/users",
+            summary: "/users",
             description: "Create User",
             tags: ["Users"],
         },
@@ -108,7 +108,7 @@ export const userRoutes = (app) => {
     app.put('/users/:id', updateUser, {
         detail: {
             operationId: 'updateUser',
-            summary: "/v1/users/:id",
+            summary: "/users/:id",
             description: "Update User",
             tags: ["Users"],
         },
@@ -146,7 +146,7 @@ export const userRoutes = (app) => {
     app.delete('/users/:id', deleteUser, {
         detail: {
             operationId: 'deleteUser',
-            summary: "/v1/users/:id",
+            summary: "/users/:id",
             description: "Delete User",
             tags: ["Users"],
         },

@@ -2,10 +2,11 @@
 
 import Users from "../models/users.js";
 
-export const getUsers = async ({ set }) => {
-    try {
-        const usersModel = new Users();
+const usersModel = new Users();
 
+export const getUsers = async ({ set, profile }) => {
+    try {
+        console.log('userId:', profile?.userId);
         const users = await usersModel.getAll();
 
         if (!users) {
@@ -26,8 +27,6 @@ export const getUsers = async ({ set }) => {
 export const getUserById = async ({ params, set }) => {
     try {
         const { id } = params;
-
-        const usersModel = new Users();
 
         const user = await usersModel.getById(Number(id));
 
@@ -56,8 +55,6 @@ export const createUser = async ({ body, set }) => {
             return { status: "error", response: "Required fields: name and email" };
         }
 
-        const usersModel = new Users();
-
         // Check if user exists
         const existingUser = await usersModel.getByEmail(email);
 
@@ -65,7 +62,7 @@ export const createUser = async ({ body, set }) => {
             set.status = 409;
             return { status: "error", response: "Email already exists" };
         }
-        
+
         const user = await usersModel.create(name, email, password);
 
         set.status = 200;
@@ -82,8 +79,6 @@ export const updateUser = async ({ params, body, set }) => {
     try {
         const { id } = params;
         const { name, email } = body;
-
-        const usersModel = new Users();
 
         // Check if user exists
         const existingUser = await usersModel.getById(Number(id));
@@ -114,8 +109,6 @@ export const updateUser = async ({ params, body, set }) => {
 export const deleteUser = async ({ params, set }) => {
     try {
         const { id } = params;
-
-        const usersModel = new Users();
 
         // Check if user exists
         const existingUser = await usersModel.getById(Number(id));

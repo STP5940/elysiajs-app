@@ -1,4 +1,4 @@
-// models/user.js
+// models/users.js
 
 import { prisma } from './prisma.js';
 
@@ -32,6 +32,12 @@ class Users {
 
     async getByEmail(_email) {
         const user = await prisma.users.findUnique({
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                password: true,
+            },
             where: {
                 email: _email
             },

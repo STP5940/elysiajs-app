@@ -1,6 +1,6 @@
 // index.js
 
-import { Elysia } from 'elysia';
+import { t, Elysia } from 'elysia';
 import { cors } from "@elysiajs/cors";
 import { swagger } from '@elysiajs/swagger';
 
@@ -8,9 +8,27 @@ import { swagger } from '@elysiajs/swagger';
 import logger from 'logixlysia';
 import { rateLimit } from "elysia-rate-limit";
 
+import { authRoutes } from './routes/auth.route.js';
 import { userRoutes } from './routes/user.routes.js';
 
 const app = new Elysia()
+    // ตรวจสอบว่ามี Error จากการ Validate หรือไม่
+    .onError(({ code, error, set }) => {
+        if (code === "VALIDATION") {
+            set.status = 422;
+
+            const errors = error.all.filter(err => 'path' in err).map(err => ({
+                path: err.path,
+                message: err.message,
+            }));
+
+            return {
+                status: "error",
+                message: 'Validation failed',
+                errors,
+            };
+        }
+    })
     .use(swagger({
         exclude: ["/swagger", "/"],
         autoDarkMode: true,
@@ -29,10 +47,10 @@ const app = new Elysia()
                 },
             },
             tags: [
-                // {
-                //     name: "Test Connection",
-                //     description: "Not Connected to Database",
-                // },
+                {
+                    name: "Authentication",
+                    description: "Users authentication",
+                },
                 {
                     name: "Users",
                     description: "Users management",
@@ -47,10 +65,6 @@ const app = new Elysia()
             max: 500, // 500 requests per minute
             responseCode: 429,
             responseMessage: { status: "error", response: "rate-limit reached" },
-            // generator: async (req, server, { ip }) => {
-            //     const ipToHash = ip || 'fallback-ip'; // กันกรณี ip เป็น undefined
-            //     crypto.createHash('sha256').update(JSON.stringify(ipToHash)).digest('hex').toString()
-            // }
             generator: async (req, server, { ip }) =>
                 Bun.hash(JSON.stringify(ip)).toString()
         })
@@ -60,13 +74,33 @@ const app = new Elysia()
             tags: ['hidden']
         }
     })
+    .derive(async ({ cookie: { refreshToken }, jwt }) => {
+        return {
+            profile: await jwt.verify(refreshToken.value)
+        };
+    })
     .use(logger())
     .use(cors({ origin: true }));
 
 // Create v1 group for API routes
 app.group('/v1', (app) => {
-    userRoutes(app);
-    return app
+    authRoutes(app);
+
+    // ใช้ guard เพื่อตรวจสอบ authentication ก่อนเข้าถึง Routes
+    app.guard({
+        beforeHandle: ({ profile, set }) => {
+            if (!profile) {
+                set.status = 401;
+                return { status: "error", response: "Unauthorized" };
+            }
+        }
+    }, (app) => {
+        // รายการ Routes ที่ต้อง Authen
+        userRoutes(app);
+        return app;
+    });
+
+    return app;
 });
 
 app.listen({ port: process.env.PORT });
