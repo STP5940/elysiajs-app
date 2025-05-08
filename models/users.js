@@ -10,7 +10,10 @@ class Users {
                 name: true,
                 email: true,
                 password: false,
-            }
+            },
+            where: {
+                deletedAt: null,
+            },
         });
         return users;
     }
@@ -24,7 +27,8 @@ class Users {
                 password: false,
             },
             where: {
-                id: Number(_id)
+                id: Number(_id),
+                deletedAt: null,
             },
         });
         return user;
@@ -39,14 +43,14 @@ class Users {
                 password: true,
             },
             where: {
-                email: _email
+                email: _email,
+                deletedAt: null,
             },
         });
         return user;
     }
 
     async create(_name, _email, _password) {
-
         // เข้ารหัสรหัสผ่านก่อนบันทึก
         const hashedPassword = await Bun.password.hash(_password);
         const user = await prisma.users.create({
@@ -60,6 +64,7 @@ class Users {
                 name: _name,
                 email: _email,
                 password: hashedPassword,
+                createdAt: new Date(),
             }
         });
         return user;
@@ -78,16 +83,20 @@ class Users {
             },
             data: {
                 name: _name,
-                email: _email
+                email: _email,
+                updatedAt: new Date(),
             }
         });
         return user;
     }
 
     async delete(_id) {
-        const user = await prisma.users.delete({
+        const user = await prisma.users.update({
             where: {
                 id: Number(_id)
+            },
+            data: {
+                deletedAt: new Date(),
             }
         });
         return user;

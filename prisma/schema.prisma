@@ -15,10 +15,11 @@ generator client {
 }
 
 model Users {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
-  email     String   @unique
+  email     String
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now())
+  createdAt DateTime
+  updatedAt DateTime?
+  deletedAt DateTime?
 }

@@ -6,7 +6,7 @@ const usersModel = new Users();
 
 export const getUsers = async ({ set, profile }) => {
     try {
-        console.log('userId:', profile?.userId);
+        // console.log('userId:', profile?.userId);
         const users = await usersModel.getAll();
 
         if (!users) {
