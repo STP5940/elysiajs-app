@@ -16,7 +16,7 @@ To run:
 bun run dev
 ```
 
-## Commit types (Type หลัก ๆ ใน Commit)
+## Commit types
 ```bash
 🎉 Initial commit
 
