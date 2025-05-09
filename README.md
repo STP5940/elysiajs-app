@@ -16,6 +16,22 @@ To run:
 bun run dev
 ```
 
+Build and Deploy to production (Compile to binary):
+
+```bash [Terminal]
+bun run build
+```
+
+```bash [Terminal]
+./server
+```
+
+Deploy to production (PM2):
+
+```bash [Terminal]
+pm2 start ecosystem.config.cjs --env production
+```
+
 ## Commit types
 ```bash
 🎉 Initial commit

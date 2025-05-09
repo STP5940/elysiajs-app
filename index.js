@@ -122,5 +122,6 @@ app.group('/v1', (app) => {
     return app;
 });
 
-app.listen({ port: process.env.PORT });
-console.log(`Server running at http://localhost:${process.env.PORT}\n`);
+const serverPort = process.env.PORT || 3000;
+app.listen({ port: serverPort });
+console.log(`Server running at http://localhost:${serverPort}\n`);
