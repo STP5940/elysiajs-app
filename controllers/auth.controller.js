@@ -39,6 +39,7 @@ export const login = async ({ body, set, jwt, refreshJwt }) => {
         return {
             status: "success",
             accessToken: tokens.accessToken,
+            refreshToken: tokens.refreshToken,
             response: {
                 id: user.id,
                 name: user.name,

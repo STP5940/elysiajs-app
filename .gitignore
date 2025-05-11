@@ -37,5 +37,6 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
 # Database SQLite form Prisma
 *.db
+*.db-journal
 *.sql
 *.toml

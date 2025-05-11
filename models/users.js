@@ -35,7 +35,7 @@ class Users {
     }
 
     async getByEmail(_email) {
-        const user = await prisma.users.findUnique({
+        const user = await prisma.users.findFirst({
             select: {
                 id: true,
                 name: true,
