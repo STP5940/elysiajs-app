@@ -1,11 +1,12 @@
 // /controllers/auth.controller.js
 
 import Users from "../models/users.js";
+
 import { generateTokens, verifyRefreshToken } from '../utils/auth.js'
 
 const usersModel = new Users()
 
-export const login = async ({ body, set, jwt, refreshJwt }) => {
+export const login = async ({ body, set, accessJwt, refreshJwt }) => {
     try {
         const { email, password } = body;
 
@@ -22,7 +23,7 @@ export const login = async ({ body, set, jwt, refreshJwt }) => {
             return { status: "error", response: "Invalid email or password" };
         }
 
-        const tokens = await generateTokens(jwt, refreshJwt, user.id);
+        const tokens = await generateTokens(accessJwt, refreshJwt, user.id);
 
         set.cookie = {
             refreshToken: {
@@ -39,7 +40,6 @@ export const login = async ({ body, set, jwt, refreshJwt }) => {
         return {
             status: "success",
             accessToken: tokens.accessToken,
-            refreshToken: tokens.refreshToken,
             response: {
                 id: user.id,
                 name: user.name,
@@ -54,7 +54,7 @@ export const login = async ({ body, set, jwt, refreshJwt }) => {
     }
 }
 
-export const refresh = async ({ cookie, set, refreshJwt, jwt }) => {
+export const refresh = async ({ cookie, set, accessJwt, refreshJwt }) => {
     try {
         const token = cookie?.refreshToken.value;
 
@@ -70,7 +70,7 @@ export const refresh = async ({ cookie, set, refreshJwt, jwt }) => {
             return { status: "error", response: "Invalid or expired refresh token" };
         }
 
-        const tokens = await generateTokens(jwt, refreshJwt, payload.userId);
+        const tokens = await generateTokens(accessJwt, refreshJwt, payload.userId);
 
         set.cookie = {
             refreshToken: {

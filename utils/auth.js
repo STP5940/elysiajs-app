@@ -10,8 +10,8 @@ const REFRESH_TOKEN_EXPIRES_IN = '7d' // 7 days
 
 // JWT setup
 export const authSetup = (app) => {
-    const jwt = elysiaJwt({
-        name: 'jwt',
+    const accessJwt = elysiaJwt({
+        name: 'accessJwt',
         secret: JWT_SECRET,
         exp: ACCESS_TOKEN_EXPIRES_IN
     })
@@ -24,14 +24,14 @@ export const authSetup = (app) => {
 
     return app
         .use(cookie())
-        .use(jwt)
+        .use(accessJwt)
         .use(refreshJwt);
 }
 
 // Generate tokens
-export const generateTokens = async (jwt, refreshJwt, userId) => {
+export const generateTokens = async (accessJwt, refreshJwt, userId) => {
     try {
-        const accessToken = await jwt.sign({ userId });
+        const accessToken = await accessJwt.sign({ userId });
         const refreshToken = await refreshJwt.sign({ userId });
         return { accessToken, refreshToken }
     } catch (error) {

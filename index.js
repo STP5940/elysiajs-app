@@ -1,10 +1,10 @@
 // index.js
 
-import { t, Elysia } from 'elysia';
+import { Elysia } from 'elysia';
 import { cors } from "@elysiajs/cors";
+import { bearer } from '@elysiajs/bearer'
 import { swagger } from '@elysiajs/swagger';
 
-// import logger from 'logixlysia';
 import logixlysia from 'logixlysia';
 import { rateLimit } from "elysia-rate-limit";
 
@@ -46,6 +46,16 @@ const app = new Elysia()
                     url: "https://pungrumpy.com",
                 },
             },
+            components: {
+                securitySchemes: {
+                    accessToken: {
+                        type: 'http',
+                        scheme: 'bearer',
+                        bearerFormat: 'JWT'
+                    }
+                }
+            },
+            security: [{ accessToken: [] }],
             tags: [
                 {
                     name: "Authentication",
@@ -74,9 +84,10 @@ const app = new Elysia()
             tags: ['hidden']
         }
     })
-    .derive(async ({ cookie: { refreshToken }, jwt }) => {
+    .use(bearer())
+    .derive(async ({ accessJwt, bearer }) => {
         return {
-            profile: await jwt.verify(refreshToken.value)
+            profile: await accessJwt.verify(bearer),
         };
     })
     .use(logixlysia(

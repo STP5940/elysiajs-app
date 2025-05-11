@@ -1,19 +1,23 @@
 // /routes/auth.route.js
 
-import { authSetup } from '../utils/auth.js'
-import { login, refresh, logout, register } from '../controllers/auth.controller.js'
 import { t } from 'elysia'
+import { authSetup } from '../utils/auth.js'
+import {
+    login, refresh,
+    logout, register
+} from '../controllers/auth.controller.js'
 
 export const authRoutes = (app) => {
     app.use(authSetup);
-    app.post('/auth/login', async ({ body, set, jwt, refreshJwt }) => {
-        return await login({ body, set, jwt, refreshJwt })
+    app.post('/auth/login', async ({ body, set, accessJwt, refreshJwt }) => {
+        return await login({ body, set, accessJwt, refreshJwt })
     }, {
         detail: {
             operationId: 'login',
             summary: "/auth/login",
             description: "Authenticate user with email and password to receive access token",
             tags: ["Authentication"],
+            security: [],
         },
         body: t.Object({
             email: t.String({
@@ -26,6 +30,15 @@ export const authRoutes = (app) => {
             })
         }),
         response: {
+            200: t.Object({
+                status: t.String({ default: "success" }),
+                accessToken: t.String(),
+                response: t.Object({
+                    id: t.Number(),
+                    name: t.String(),
+                    email: t.String()
+                })
+            }),
             422: t.Object({
                 status: t.String({ default: "fail" }),
                 message: t.String({ default: "Validation error" }),
@@ -41,19 +54,25 @@ export const authRoutes = (app) => {
         },
     });
 
-    app.post('/auth/refresh', async ({ cookie, set, refreshJwt, jwt }) => {
-        return await refresh({ cookie, set, refreshJwt, jwt })
+    app.post('/auth/refresh', async ({ cookie, set, accessJwt, refreshJwt }) => {
+        return await refresh({ cookie, set, accessJwt, refreshJwt })
     }, {
         detail: {
             operationId: 'refreshToken',
             summary: "/auth/refresh",
             description: "Get new access token using refresh token",
             tags: ["Authentication"],
-            security: [{
-                cookieAuth: []
-            }],
+            security: [],
         },
         response: {
+            200: t.Object({
+                status: t.String({ default: "success" }),
+                accessToken: t.String({ default: "eyJhbGciOiJIUzI1NiJ9..." }),
+            }),
+            401: t.Object({
+                status: t.String({ default: "error" }),
+                response: t.String({ default: "No refresh token provided" }),
+            }),
             500: t.Object({
                 status: t.String({ default: "error" }),
                 response: t.String({ default: "Internal server error" }),
@@ -69,8 +88,13 @@ export const authRoutes = (app) => {
             summary: "/auth/logout",
             description: "Invalidate refresh token cookie",
             tags: ["Authentication"],
+            security: [],
         },
         response: {
+            200: t.Object({
+                status: t.String({ default: "success" }),
+                response: t.String({ default: "Logged out successfully" }),
+            }),
             500: t.Object({
                 status: t.String({ default: "error" }),
                 response: t.String({ default: "Internal server error" }),
@@ -86,6 +110,7 @@ export const authRoutes = (app) => {
             summary: "/auth/register",
             description: "Create a new user account",
             tags: ["Authentication"],
+            security: [],
         },
         body: t.Object({
             name: t.String({
@@ -102,6 +127,18 @@ export const authRoutes = (app) => {
             })
         }),
         response: {
+            200: t.Object({
+                status: t.String({ default: "success" }),
+                response: t.Object({
+                    id: t.Number(),
+                    name: t.String(),
+                    email: t.String()
+                })
+            }),
+            409: t.Object({
+                status: t.String({ default: "error" }),
+                response: t.String({ default: "User with this email already exists" }),
+            }),
             500: t.Object({
                 status: t.String({ default: "error" }),
                 response: t.String({ default: "Internal server error" }),

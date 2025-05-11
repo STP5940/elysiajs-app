@@ -57,8 +57,8 @@ export const createUser = async ({ body, set }) => {
 
         // Check if user exists
         const existingUser = await usersModel.getByEmail(email);
-
-        if (existingUser) {
+        
+        if (!existingUser) {
             set.status = 409;
             return { status: "error", response: "Email already exists" };
         }
