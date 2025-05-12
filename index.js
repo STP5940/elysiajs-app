@@ -118,8 +118,8 @@ app.group('/v1', (app) => {
 
     // ใช้ guard เพื่อตรวจสอบ authentication ก่อนเข้าถึง Routes
     app.guard({
-        beforeHandle: ({ profile, set }) => {
-            if (!profile) {
+        beforeHandle: ({ bearer, profile, set }) => {
+            if (!bearer || !profile) {
                 set.status = 401;
                 return { status: "error", response: "Unauthorized" };
             }
