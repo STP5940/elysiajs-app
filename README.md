@@ -48,3 +48,13 @@ pm2 start ecosystem.config.cjs --env production
 👷 ci:        — ปรับปรุง เปลี่ยนแปลง CI Config ของไฟล์ หรือ สคริปต์ เช่น Jenkins, GitLab CI
 ⏪ revert:    — ย้อนกลับ commit
 ```
+
+Load Test Tools:
+
+```bash [Terminal]
+npm install autocannon -g
+```
+
+```bash [Terminal]
+npx autocannon http://localhost:9001/v1/users -a 100 --header "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.xxx"
+```
