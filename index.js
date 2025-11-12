@@ -79,17 +79,6 @@ const app = new Elysia()
                 Bun.hash(JSON.stringify(ip)).toString()
         })
     )
-    .get('/', () => 'Hello World!', {
-        detail: {
-            tags: ['hidden']
-        }
-    })
-    .use(bearer())
-    .derive(async ({ accessJwt, bearer }) => {
-        return {
-            profile: await accessJwt.verify(bearer),
-        };
-    })
     .use(logixlysia(
         {
             // เพิ่มระบบ logging
@@ -102,7 +91,7 @@ const app = new Elysia()
                 ip: true,
                 logFilePath: `./logs/information.log`,
                 customLogFormat:
-                    '🦊 {now} {level} {duration} {method} {pathname} {status} {message} {ip} {epoch}',
+                    '🦊 {now} {level} {duration} {method} {pathname} {status} {message} {ip}',
                 logFilter: {
                     level: ['ERROR', 'WARNING', 'INFO'],
                     method: ['GET', 'POST', 'PUT', 'DELETE']
@@ -110,7 +99,18 @@ const app = new Elysia()
             },
         }
     ))
-    .use(cors({ origin: true }));
+    .use(cors({ origin: true }))
+    .get('/', () => `Hello from Worker ${process.pid}`, {
+        detail: {
+            tags: ['hidden']
+        }
+    })
+    .use(bearer())
+    .derive(async ({ accessJwt, bearer }) => {
+        return {
+            profile: await accessJwt.verify(bearer),
+        };
+    });
 
 // Create v1 group for API routes
 app.group('/v1', (app) => {
