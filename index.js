@@ -14,19 +14,26 @@ import { userRoutes } from './routes/user.routes.js';
 const app = new Elysia()
     // ตรวจสอบว่ามี Error จากการ Validate หรือไม่
     .onError(({ code, error, set }) => {
-        if (code === "VALIDATION") {
-            set.status = 422;
+        switch (code) {
+            case 'VALIDATION':
+                const errors = error.all.filter(err => 'path' in err).map(err => ({
+                    path: err.path,
+                    message: err.message,
+                }));
 
-            const errors = error.all.filter(err => 'path' in err).map(err => ({
-                path: err.path,
-                message: err.message,
-            }));
-
-            return {
-                status: "error",
-                message: 'Validation failed',
-                errors,
-            };
+                set.status = 422;
+                return {
+                    status: "error",
+                    response: 'Validation failed',
+                    errors,
+                };
+            default:
+                set.status = 500;
+                return {
+                    status: "error",
+                    response: "Internal server error",
+                    errors,
+                };
         }
     })
     .use(swagger({
@@ -100,7 +107,7 @@ const app = new Elysia()
         }
     ))
     .use(cors({ origin: true }))
-    .get('/', () => `Hello from Worker ${process.pid}`, {
+    .get('/', () => `Hello From Worker ${process.pid}`, {
         detail: {
             tags: ['hidden']
         }

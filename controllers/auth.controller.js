@@ -50,7 +50,7 @@ export const login = async ({ body, set, accessJwt, refreshJwt }) => {
         console.error(e.message);
 
         set.status = 500;
-        return { status: "error", response: "Internal Server Error" };
+        return { status: "error", response: "Internal server error" };
     }
 }
 
@@ -92,7 +92,7 @@ export const refresh = async ({ cookie, set, accessJwt, refreshJwt }) => {
         console.error(e.message);
 
         set.status = 500;
-        return { status: "error", response: "Internal Server Error" };
+        return { status: "error", response: "Internal server error" };
     }
 }
 
@@ -115,7 +115,7 @@ export const logout = async ({ set }) => {
         console.error(e.message);
 
         set.status = 500;
-        return { status: "error", response: "Internal Server Error" };
+        return { status: "error", response: "Internal server error" };
     }
 }
 
@@ -137,6 +137,6 @@ export const register = async ({ body, set }) => {
         console.error(e.message);
 
         set.status = 500;
-        return { status: "error", response: "Internal Server Error" };
+        return { status: "error", response: "Internal server error" };
     }
 }

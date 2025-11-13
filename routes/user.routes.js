@@ -45,7 +45,7 @@ export const userRoutes = (app) => {
             tags: ["Users"],
         },
         params: t.Object({
-            id: t.String()
+            id: t.Number()
         }),
         response: {
             200: t.Object({
@@ -59,6 +59,14 @@ export const userRoutes = (app) => {
             404: t.Object({
                 status: t.String({ default: "error" }),
                 response: t.String({ default: "User not found" }),
+            }),
+            422: t.Object({
+                status: t.String({ default: "error" }),
+                response: t.String({ default: "Validation failed" }),
+                errors: t.Optional(t.Array(t.Object({
+                    path: t.String(),
+                    message: t.String(),
+                }))),
             }),
             500: t.Object({
                 status: t.String({ default: "error" }),
@@ -113,7 +121,7 @@ export const userRoutes = (app) => {
             tags: ["Users"],
         },
         params: t.Object({
-            id: t.String()
+            id: t.Number()
         }),
         body: t.Object({
             name: t.Optional(t.String()),
@@ -151,7 +159,7 @@ export const userRoutes = (app) => {
             tags: ["Users"],
         },
         params: t.Object({
-            id: t.String()
+            id: t.Number()
         }),
         response: {
             200: t.Object({
@@ -161,6 +169,14 @@ export const userRoutes = (app) => {
             404: t.Object({
                 status: t.String({ default: "error" }),
                 response: t.String({ default: "User not found" }),
+            }),
+            422: t.Object({
+                status: t.String({ default: "error" }),
+                response: t.String({ default: "Validation failed" }),
+                errors: t.Optional(t.Array(t.Object({
+                    path: t.String(),
+                    message: t.String(),
+                }))),
             }),
             500: t.Object({
                 status: t.String({ default: "error" }),

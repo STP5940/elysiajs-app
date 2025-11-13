@@ -20,7 +20,8 @@ export const getUsers = async ({ set, profile }) => {
         console.error(e.message);
 
         set.status = 500;
-        return { status: "error", response: "Internal Server Error" };
+        return { status: "error", response: "Internal server error" };
+        // throw new Error('Internal server error while fetching users');
     }
 }
 
@@ -41,7 +42,7 @@ export const getUserById = async ({ params, set }) => {
         console.error(e.message);
 
         set.status = 500;
-        return { status: "error", response: "Internal Server Error" };
+        return { status: "error", response: "Internal server error" };
     }
 }
 
@@ -71,7 +72,7 @@ export const createUser = async ({ body, set }) => {
         console.error(e.message);
 
         set.status = 500;
-        return { status: "error", response: "Internal Server Error" };
+        return { status: "error", response: "Internal server error" };
     }
 }
 
@@ -102,7 +103,7 @@ export const updateUser = async ({ params, body, set }) => {
         console.error(e.message);
 
         set.status = 500;
-        return { status: "error", response: "Internal Server Error" };
+        return { status: "error", response: "Internal server error" };
     }
 }
 
@@ -126,6 +127,6 @@ export const deleteUser = async ({ params, set }) => {
         console.error(e.message);
 
         set.status = 500;
-        return { status: "error", response: "Internal Server Error" };
+        return { status: "error", response: "Internal server error" };
     }
 }

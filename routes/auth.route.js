@@ -40,10 +40,10 @@ export const authRoutes = (app) => {
                 })
             }),
             422: t.Object({
-                status: t.String({ default: "fail" }),
-                message: t.String({ default: "Validation error" }),
+                status: t.String({ default: "error" }),
+                response: t.String({ default: "Validation failed" }),
                 errors: t.Optional(t.Array(t.Object({
-                    field: t.String(),
+                    path: t.String(),
                     message: t.String(),
                 }))),
             }),
