@@ -6,7 +6,6 @@
   "private": true,
   "scripts": {
     "dev": "bun run --watch index.js",
-    "build": "bun src/index.ts -d api --dts",
     "build:exe": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server ./index.js"
   },
   "devDependencies": {
