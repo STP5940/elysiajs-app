@@ -32,7 +32,6 @@ const app = new Elysia()
                 return {
                     status: "error",
                     response: "Internal server error",
-                    errors,
                 };
         }
     })
