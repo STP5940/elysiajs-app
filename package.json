@@ -6,9 +6,9 @@
   "private": true,
   "scripts": {
     "dev": "bun run --watch index.js",
-    "build": "bun build index.js --target node --outfile server.js",
+    "build": "echo 'No build needed for Elysia'",
     "build:exe": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server ./index.js",
-    "vercel-build": "bun install && npx prisma generate && bun run build"
+    "vercel-build": "bun install && npx prisma generate"
   },
   "devDependencies": {
     "@types/bun": "^1.2.12",
