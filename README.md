@@ -10,6 +10,10 @@ bun install
 npx prisma migrate dev --name init
 ```
 
+```bash [Terminal]
+npx prisma studio
+```
+
 To run:
 
 ```bash [Terminal]
