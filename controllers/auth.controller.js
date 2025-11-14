@@ -1,6 +1,5 @@
 // /controllers/auth.controller.js
 
-import bcrypt from 'bcrypt';
 import Users from "../models/users.js";
 
 import { generateTokens, verifyRefreshToken } from '../utils/auth.js'
@@ -18,8 +17,7 @@ export const login = async ({ body, set, accessJwt, refreshJwt }) => {
             return { status: "error", response: "Invalid email or password" };
         }
 
-        // const isPasswordValid = await Bun.password.verify(password, user.password);
-        const isPasswordValid = await bcrypt.compare(password, user.password);
+        const isPasswordValid = await Bun.password.verify(password, user.password);
         if (!isPasswordValid) {
             set.status = 401;
             return { status: "error", response: "Invalid email or password" };

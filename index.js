@@ -1,6 +1,5 @@
 // index.js
 
-import crypto from 'crypto';
 import { Elysia } from 'elysia';
 import { cors } from "@elysiajs/cors";
 import { bearer } from '@elysiajs/bearer'
@@ -84,15 +83,7 @@ const app = new Elysia()
             responseCode: 429,
             responseMessage: { status: "error", response: "rate-limit reached" },
             generator: async (req, server, { ip }) =>
-            // Bun.hash(JSON.stringify(ip)).toString()
-            {
-                // ใช้ crypto ของ Node.js แทน Bun.hash
-                const ipString = ip ? JSON.stringify(ip) : 'unknown';
-                return crypto
-                    .createHash('sha256')
-                    .update(ipString)
-                    .digest('hex');
-            }
+            Bun.hash(JSON.stringify(ip)).toString()
         })
     )
     .use(logixlysia(
@@ -105,7 +96,7 @@ const app = new Elysia()
                     translateTime: 'yyyy-mm-dd HH:MM:ss'
                 },
                 ip: true,
-                // logFilePath: `./logs/information.log`,
+                logFilePath: `./logs/information.log`,
                 customLogFormat:
                     '🦊 {now} {level} {duration} {method} {pathname} {status} {message} {ip}',
                 logFilter: {
@@ -149,18 +140,6 @@ app.group('/v1', (app) => {
     return app;
 });
 
-console.log('Environment:', process.env.NODE_ENV);
-console.log('Database URL exists:', !!process.env.DATABASE_URL);
-console.log('JWT Secret exists:', !!process.env.JWT_SECRET);
-
-// Export สำหรับ Vercel Serverless Function
-export default async (req) => {
-  return app.fetch(req);
-};
-
-// สำหรับรัน local development เท่านั้น
-if (process.env.NODE_ENV !== 'production') {
-    const serverPort = process.env.PORT || 3000;
-    app.listen({ port: serverPort });
-    console.log(`Server running at http://localhost:${serverPort}\n`);
-}
+const serverPort = process.env.PORT || 3000;
+app.listen({ port: serverPort });
+console.log(`Server running at http://localhost:${serverPort}\n`);
