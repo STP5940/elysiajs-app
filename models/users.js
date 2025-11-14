@@ -1,5 +1,6 @@
 // models/users.js
 
+import bcrypt from 'bcrypt';
 import { prisma } from './prisma.js';
 
 class Users {
@@ -52,7 +53,8 @@ class Users {
 
     async create(_name, _email, _password) {
         // เข้ารหัสรหัสผ่านก่อนบันทึก
-        const hashedPassword = await Bun.password.hash(_password);
+        // const hashedPassword = await Bun.password.hash(_password);
+        const hashedPassword = await bcrypt.hash(_password, 10);
         const user = await prisma.users.create({
             select: {
                 id: true,

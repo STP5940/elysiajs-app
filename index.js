@@ -1,5 +1,6 @@
 // index.js
 
+import crypto from 'crypto';
 import { Elysia } from 'elysia';
 import { cors } from "@elysiajs/cors";
 import { bearer } from '@elysiajs/bearer'
@@ -29,6 +30,7 @@ const app = new Elysia()
                 };
             default:
                 set.status = 500;
+                // console.error(error);
                 return {
                     status: "error",
                     response: "Internal server error",
@@ -82,7 +84,15 @@ const app = new Elysia()
             responseCode: 429,
             responseMessage: { status: "error", response: "rate-limit reached" },
             generator: async (req, server, { ip }) =>
-                Bun.hash(JSON.stringify(ip)).toString()
+            // Bun.hash(JSON.stringify(ip)).toString()
+            {
+                // ใช้ crypto ของ Node.js แทน Bun.hash
+                const ipString = ip ? JSON.stringify(ip) : 'unknown';
+                return crypto
+                    .createHash('sha256')
+                    .update(ipString)
+                    .digest('hex');
+            }
         })
     )
     .use(logixlysia(
@@ -139,4 +149,7 @@ app.group('/v1', (app) => {
     return app;
 });
 
-export default app;
+// export default app;
+const serverPort = process.env.PORT || 3000;
+app.listen({ port: serverPort });
+console.log(`Server running at http://localhost:${serverPort}\n`);
