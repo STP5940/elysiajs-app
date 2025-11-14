@@ -8,7 +8,7 @@
     "dev": "bun run --watch index.js",
     "build": "bun build index.js --target node --outfile server.js",
     "build:exe": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server ./index.js",
-    "vercel-build": "bun install && npx prisma migrate deploy && bun run build"
+    "vercel-build": "bun install && npx prisma generate && bun run build"
   },
   "devDependencies": {
     "@types/bun": "^1.2.12",
