@@ -149,7 +149,14 @@ app.group('/v1', (app) => {
     return app;
 });
 
-// export default app;
-const serverPort = process.env.PORT || 3000;
-app.listen({ port: serverPort });
-console.log(`Server running at http://localhost:${serverPort}\n`);
+// Export สำหรับ Vercel Serverless Function
+export default async (req) => {
+  return app.fetch(req);
+};
+
+// สำหรับรัน local development เท่านั้น
+if (process.env.NODE_ENV !== 'production') {
+    const serverPort = process.env.PORT || 3000;
+    app.listen({ port: serverPort });
+    console.log(`Server running at http://localhost:${serverPort}\n`);
+}
