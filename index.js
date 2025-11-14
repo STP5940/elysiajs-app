@@ -149,6 +149,10 @@ app.group('/v1', (app) => {
     return app;
 });
 
+console.log('Environment:', process.env.NODE_ENV);
+console.log('Database URL exists:', !!process.env.DATABASE_URL);
+console.log('JWT Secret exists:', !!process.env.JWT_SECRET);
+
 // Export สำหรับ Vercel Serverless Function
 export default async (req) => {
   return app.fetch(req);
