@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "dev": "bun run --watch index.js",
-    "build:exe": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server ./index.js"
+    "build": "bun install && npx prisma generate",
+    "build:exe": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server ./index.js",
   },
   "devDependencies": {
     "@types/bun": "^1.2.12",
