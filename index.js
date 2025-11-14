@@ -105,7 +105,7 @@ const app = new Elysia()
                     translateTime: 'yyyy-mm-dd HH:MM:ss'
                 },
                 ip: true,
-                logFilePath: `./logs/information.log`,
+                // logFilePath: `./logs/information.log`,
                 customLogFormat:
                     '🦊 {now} {level} {duration} {method} {pathname} {status} {message} {ip}',
                 logFilter: {
