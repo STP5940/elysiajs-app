@@ -139,12 +139,4 @@ app.group('/v1', (app) => {
     return app;
 });
 
-// Export for Vercel serverless function
 export default app;
-
-// Only listen if not in serverless environment
-if (!process.env.VERCEL) {
-    const serverPort = process.env.PORT || 3000;
-    app.listen({ port: serverPort });
-    console.log(`Server running at http://localhost:${serverPort}\n`);
-}
