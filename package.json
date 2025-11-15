@@ -7,10 +7,13 @@
   "scripts": {
     "dev": "bun run --watch index.js",
     "build": "bun install && npx prisma generate --no-engine",
-    "build:exe": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server ./index.js"
+    "build:exe": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server ./index.js",
+    "build:binary": "bun build --compile --minify-whitespace --minify-syntax --target bun-linux-x64 --outfile server ./index.js",
+    "start:prod": "cross-env NODE_ENV=production bun ./index.js"
   },
   "devDependencies": {
     "@types/bun": "^1.2.12",
+    "cross-env": "^10.1.0",
     "prisma": "^6.7.0"
   },
   "peerDependencies": {
