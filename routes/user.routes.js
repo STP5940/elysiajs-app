@@ -113,7 +113,7 @@ export const userRoutes = (app) => {
         },
     });
 
-    app.put('/users/:id', updateUser, {
+    app.patch('/users/:id', updateUser, {
         detail: {
             operationId: 'updateUser',
             summary: "/users/:id",
