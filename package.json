@@ -26,7 +26,6 @@
     "@elysiajs/jwt": "^1.3.0",
     "@elysiajs/swagger": "^1.3.0",
     "@prisma/client": "^6.7.0",
-    "bcrypt": "^6.0.0",
     "elysia": "^1.3.0",
     "elysia-rate-limit": "^3.2.2",
     "logixlysia": "^3.1.0"

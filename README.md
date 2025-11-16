@@ -9,19 +9,19 @@ bun install
 Creates and applies database migrations:
 
 ```bash [Terminal]
-npx prisma migrate dev --name init
+bun prisma migrate dev --name init
 ```
 
 Generates Prisma client only:
 
 ```bash [Terminal]
-npx prisma generate --no-engine
+bun prisma generate --no-engine
 ```
 
 Open Prisma Studio (GUI):
 
 ```bash [Terminal]
-npx prisma studio
+bun prisma studio
 ```
 
 To run:
@@ -66,7 +66,7 @@ pm2 start ecosystem.config.cjs --env production
 Load Test Tools:
 
 ```bash [Terminal]
-npm install autocannon -g
+bun install autocannon -g
 ```
 
 ```bash [Terminal]
