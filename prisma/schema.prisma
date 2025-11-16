@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+/**
+ * Provider: Database provider to use.
+ * PostgreSQL: "postgresql"
+ * SQLite: "sqlite"
+ * MySQL: "mysql"
+ * SQL Server: "sqlserver"
+ * MongoDB: "mongodb"
+ */
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native"]
+  output        = "../node_modules/.prisma/client"
+}
+
+model Users {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String
+  password  String
+  createdAt DateTime
+  updatedAt DateTime?
+  deletedAt DateTime?
+}
