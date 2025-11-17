@@ -18,7 +18,8 @@ export const userRoutes = (app) => {
         response: {
             200: t.Object({
                 status: t.String({ default: "success" }),
-                response: t.Array(
+                message: t.String({ default: "Users retrieved successfully" }),
+                data: t.Array(
                     t.Object({
                         id: t.Number(),
                         name: t.String(),
@@ -28,11 +29,11 @@ export const userRoutes = (app) => {
             }),
             404: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "User not found" }),
+                message: t.String({ default: "User not found" }),
             }),
             500: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "Internal server error" }),
+                message: t.String({ default: "Internal server error" }),
             }),
         },
     });
@@ -50,7 +51,8 @@ export const userRoutes = (app) => {
         response: {
             200: t.Object({
                 status: t.String({ default: "success" }),
-                response: t.Object({
+                message: t.String({ default: "User retrieved successfully" }),
+                data: t.Object({
                     id: t.Number(),
                     name: t.String(),
                     email: t.String(),
@@ -58,11 +60,11 @@ export const userRoutes = (app) => {
             }),
             404: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "User not found" }),
+                message: t.String({ default: "User not found" }),
             }),
             422: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "Validation failed" }),
+                message: t.String({ default: "Validation failed" }),
                 errors: t.Optional(t.Array(t.Object({
                     path: t.String(),
                     message: t.String(),
@@ -70,7 +72,7 @@ export const userRoutes = (app) => {
             }),
             500: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "Internal server error" }),
+                message: t.String({ default: "Internal server error" }),
             }),
         },
     });
@@ -92,7 +94,8 @@ export const userRoutes = (app) => {
         response: {
             200: t.Object({
                 status: t.String({ default: "success" }),
-                response: t.Object({
+                message: t.String({ default: "User created successfully" }),
+                data: t.Object({
                     id: t.Number(),
                     name: t.String(),
                     email: t.String()
@@ -100,15 +103,15 @@ export const userRoutes = (app) => {
             }),
             409: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "Email already exists" }),
+                message: t.String({ default: "Email already exists" }),
             }),
             422: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "Required fields: name and email" }),
+                message: t.String({ default: "Required fields: name and email" }),
             }),
             500: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "Internal server error" }),
+                message: t.String({ default: "Internal server error" }),
             }),
         },
     });
@@ -130,7 +133,8 @@ export const userRoutes = (app) => {
         response: {
             200: t.Object({
                 status: t.String({ default: "success" }),
-                response: t.Object({
+                message: t.String({ default: "User updated successfully" }),
+                data: t.Object({
                     id: t.Number(),
                     name: t.String(),
                     email: t.String(),
@@ -138,15 +142,15 @@ export const userRoutes = (app) => {
             }),
             404: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "User not found" }),
+                message: t.String({ default: "User not found" }),
             }),
             422: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "Required fields: name and email" }),
+                message: t.String({ default: "Required fields: name and email" }),
             }),
             500: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "Internal server error" }),
+                message: t.String({ default: "Internal server error" }),
             }),
         },
     });
@@ -164,15 +168,15 @@ export const userRoutes = (app) => {
         response: {
             200: t.Object({
                 status: t.String({ default: "success" }),
-                response: t.String({ default: "User deleted" }),
+                message: t.String({ default: "User deleted" }),
             }),
             404: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "User not found" }),
+                message: t.String({ default: "User not found" }),
             }),
             422: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "Validation failed" }),
+                message: t.String({ default: "Validation failed" }),
                 errors: t.Optional(t.Array(t.Object({
                     path: t.String(),
                     message: t.String(),
@@ -180,7 +184,7 @@ export const userRoutes = (app) => {
             }),
             500: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "Internal server error" }),
+                message: t.String({ default: "Internal server error" }),
             }),
         },
     });

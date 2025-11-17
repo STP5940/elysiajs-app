@@ -24,7 +24,7 @@ const app = new Elysia()
                 set.status = 422;
                 return {
                     status: "error",
-                    response: 'Validation failed',
+                    message: 'Validation failed',
                     errors,
                 };
             default:
@@ -32,7 +32,7 @@ const app = new Elysia()
                 // console.error(error);
                 return {
                     status: "error",
-                    response: "Internal server error",
+                    message: "Internal server error",
                 };
         }
     })
@@ -81,7 +81,7 @@ const app = new Elysia()
             duration: 60 * 1000, // 1 minute in milliseconds
             max: 500, // 500 requests per minute
             responseCode: 429,
-            responseMessage: { status: "error", response: "rate-limit reached" },
+            responseMessage: { status: "error", message: "rate-limit reached" },
             generator: async (req, server, { ip }) =>
             Bun.hash(JSON.stringify(ip)).toString()
         })
@@ -128,7 +128,7 @@ app.group('/v1', (app) => {
         beforeHandle: ({ bearer, profile, set }) => {
             if (!bearer || !profile) {
                 set.status = 401;
-                return { status: "error", response: "Unauthorized" };
+                return { status: "error", message: "Unauthorized" };
             }
         }
     }, (app) => {

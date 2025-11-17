@@ -32,8 +32,9 @@ export const authRoutes = (app) => {
         response: {
             200: t.Object({
                 status: t.String({ default: "success" }),
-                accessToken: t.String(),
-                response: t.Object({
+                accessToken: t.String({ default: "eyJhbGciOiJIUzI1NiJ9..." }),
+                message: t.String({ default: "Login successful" }),
+                data: t.Object({
                     id: t.Number(),
                     name: t.String(),
                     email: t.String()
@@ -41,7 +42,7 @@ export const authRoutes = (app) => {
             }),
             422: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "Validation failed" }),
+                message: t.String({ default: "Validation failed" }),
                 errors: t.Optional(t.Array(t.Object({
                     path: t.String(),
                     message: t.String(),
@@ -49,7 +50,7 @@ export const authRoutes = (app) => {
             }),
             500: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "Internal server error" }),
+                message: t.String({ default: "Internal server error" }),
             }),
         },
     });
@@ -71,11 +72,11 @@ export const authRoutes = (app) => {
             }),
             401: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "No refresh token provided" }),
+                message: t.String({ default: "No refresh token provided" }),
             }),
             500: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "Internal server error" }),
+                message: t.String({ default: "Internal server error" }),
             }),
         },
     });
@@ -93,11 +94,11 @@ export const authRoutes = (app) => {
         response: {
             200: t.Object({
                 status: t.String({ default: "success" }),
-                response: t.String({ default: "Logged out successfully" }),
+                message: t.String({ default: "Logged out successfully" }),
             }),
             500: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "Internal server error" }),
+                message: t.String({ default: "Internal server error" }),
             }),
         },
     });
@@ -129,7 +130,8 @@ export const authRoutes = (app) => {
         response: {
             200: t.Object({
                 status: t.String({ default: "success" }),
-                response: t.Object({
+                message: t.String({ default: "User registered successfully" }),
+                data: t.Object({
                     id: t.Number(),
                     name: t.String(),
                     email: t.String()
@@ -137,11 +139,11 @@ export const authRoutes = (app) => {
             }),
             409: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "User with this email already exists" }),
+                message: t.String({ default: "User with this email already exists" }),
             }),
             500: t.Object({
                 status: t.String({ default: "error" }),
-                response: t.String({ default: "Internal server error" }),
+                message: t.String({ default: "Internal server error" }),
             }),
         },
     });
