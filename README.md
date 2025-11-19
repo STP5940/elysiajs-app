@@ -69,7 +69,7 @@ pm2 start ecosystem.config.cjs --env production
 ⏪ revert:    — ย้อนกลับ commit
 ```
 
-Load Test Tools:
+### Load Test Tools:
 
 ```bash [Terminal]
 bun install autocannon -g
@@ -77,4 +77,21 @@ bun install autocannon -g
 
 ```bash [Terminal]
 npx autocannon http://localhost:4001/v1/users -a 100 --header "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.xxx"
+```
+
+## Deploy on Render
+
+Build Command First time:
+
+```bash [Terminal]
+# First time
+bun run build; bun prisma migrate dev --name init
+# After
+bun run build
+```
+
+Start Command:
+
+```bash [Terminal]
+bun run start:prod
 ```
