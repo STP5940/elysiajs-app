@@ -83,7 +83,7 @@ const app = new Elysia()
             responseCode: 429,
             responseMessage: { status: "error", message: "rate-limit reached" },
             generator: async (req, server, { ip }) =>
-            Bun.hash(JSON.stringify(ip)).toString()
+                Bun.hash(JSON.stringify(ip)).toString()
         })
     )
     .use(logixlysia(
