@@ -84,7 +84,7 @@ npx autocannon http://localhost:4001/v1/users -a 100 --header "Authorization: Be
 Build Command:
 
 ```bash [Terminal]
-bun run build;
+bun run build
 ```
 
 Start Command:
