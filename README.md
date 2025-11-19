@@ -81,7 +81,7 @@ npx autocannon http://localhost:4001/v1/users -a 100 --header "Authorization: Be
 
 ## Deploy on Render
 
-Build Command First time:
+Build Command:
 
 ```bash [Terminal]
 # First time
