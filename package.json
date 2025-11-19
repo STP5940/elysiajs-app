@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "bun run --watch index.js",
-    "build": "bun install && npx prisma generate --no-engine",
+    "build": "bun install && bun prisma generate",
     "build:exe": "bun build --compile --minify-whitespace --minify-syntax --target bun --outfile server ./index.js",
     "build:binary": "bun build --compile --minify-whitespace --minify-syntax --target bun-linux-x64 --outfile server ./index.js",
     "start:prod": "cross-env NODE_ENV=production bun ./index.js"

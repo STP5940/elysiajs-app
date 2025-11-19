@@ -84,10 +84,7 @@ npx autocannon http://localhost:4001/v1/users -a 100 --header "Authorization: Be
 Build Command:
 
 ```bash [Terminal]
-# First time
-bun run build; bun prisma migrate dev --name init
-# After
-bun run build
+bun run build;
 ```
 
 Start Command:
