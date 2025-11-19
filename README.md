@@ -1,4 +1,4 @@
-# elysiajs-app
+# ElysiaJS App
 
 ## To install dependencies:
 
@@ -92,3 +92,10 @@ Start Command:
 ```bash [Terminal]
 bun run start:prod
 ```
+
+<div align="center">
+  
+  # 🌸 🦊 Elysia REST API By Swagger 🦊 🌸
+
+  <img src="https://github.com/user-attachments/assets/99ed826b-76cc-4d78-a3ab-42ba7a7bdbbd" width="1882" height="943" alt="API Document By Swagger"/>
+</div>
