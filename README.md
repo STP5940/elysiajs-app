@@ -24,7 +24,13 @@ Open Prisma Studio (GUI):
 bun prisma studio
 ```
 
-To run:
+Run unit tests
+
+```bash [Terminal]
+bun test
+```
+
+To run the example application:
 
 ```bash [Terminal]
 bun run dev
