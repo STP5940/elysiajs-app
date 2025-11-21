@@ -1,4 +1,6 @@
 # ElysiaJS App
+#### ElysiaJS, Bun, Prisma ORM, Mssql, Unit Test, CI/CD
+🦊 [How to Deploy ElysiaJs (YouTube)](https://youtu.be/vb_p4DWaTBY)
 
 ## To install dependencies:
 
