@@ -8,7 +8,7 @@ import { swagger } from '@elysiajs/swagger';
 import logixlysia from 'logixlysia';
 import { rateLimit } from "elysia-rate-limit";
 
-import { authRoutes } from './routes/auth.route.js';
+import { authRoutes } from './routes/auth.routes.js';
 import { userRoutes } from './routes/user.routes.js';
 
 const app = new Elysia()

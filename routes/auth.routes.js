@@ -1,4 +1,4 @@
-// /routes/auth.route.js
+// /routes/auth.routes.js
 
 import { t } from 'elysia'
 import { authSetup } from '../utils/auth.js'
