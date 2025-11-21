@@ -1,4 +1,5 @@
-// test/index.test.ts
+// test/index.test.js
+
 import { describe, expect, it } from 'bun:test'
 import { Elysia } from 'elysia'
 
