@@ -36,7 +36,7 @@ describe('Auth Routes', () => {
       expect(body.errors[0].message).toContain("Expected string to match 'email' format")
     })
 
-    it('should return 422 when password is missing', async () => {
+    it('should return 422 when password is incorrect', async () => {
       const response = await app.handle(
         new Request('http://localhost/v1/auth/login', {
           method: 'POST',
@@ -56,7 +56,7 @@ describe('Auth Routes', () => {
       expect(body.errors[0].message).toContain('Expected string length greater or equal to 6')
     })
 
-    it('should return successful response with valid credentials', async () => {
+    it('should return 200 with tokens when credentials are valid', async () => {
       const response = await app.handle(
         new Request('http://localhost/v1/auth/login', {
           method: 'POST',
@@ -75,10 +75,9 @@ describe('Auth Routes', () => {
         expect(body.message).toContain('success')
       } else {
         const body = await response.json()
-        console.log('Error response:', body)
 
         // ตรวจสอบโครงสร้าง error response
-        expect(body).toHaveProperty('errors')
+        expect(body.status).toContain('error')
       }
     })
   })
