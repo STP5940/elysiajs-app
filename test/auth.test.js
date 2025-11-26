@@ -68,17 +68,22 @@ describe('Auth Routes', () => {
         })
       )
 
-      if (response.status === 200) {
-        const body = await response.json()
+      // ตรวจสอบว่า status ต้องเป็น 200
+      expect(response.status).toBe(200)
 
-        expect(body).toHaveProperty('message')
-        expect(body.message).toContain('success')
-      } else {
-        const body = await response.json()
+      // ถ้า status เป็น 200 ถึงจะตรวจสอบ body ต่อ
+      const body = await response.json()
 
-        // ตรวจสอบโครงสร้าง error response
-        expect(body.status).toContain('error')
-      }
+      expect(body).toHaveProperty('status', 'success')
+      expect(body).toHaveProperty('accessToken')
+      expect(typeof body.accessToken).toBe('string')
+      expect(body).toHaveProperty('message', 'Login successful')
+      expect(body).toHaveProperty('data')
+      expect(body.data).toEqual({
+        id: expect.any(Number),
+        name: expect.any(String),
+        email: expect.any(String),
+      })
     })
   })
 })
