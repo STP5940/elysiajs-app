@@ -1,4 +1,5 @@
 const instances = [
+  { id: 0, devPort: 4000, prodPort: 9000 },
   { id: 1, devPort: 4001, prodPort: 9001 },
   { id: 2, devPort: 4002, prodPort: 9002 },
   { id: 3, devPort: 4003, prodPort: 9003 },
