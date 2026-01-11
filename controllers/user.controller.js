@@ -18,6 +18,7 @@ export const getUsers = async ({ set, profile }) => {
         return {
             status: "success",
             message: "Users retrieved successfully",
+            count: users?.length || 0,
             data: users
         };
     } catch (e) {

@@ -19,6 +19,7 @@ export const userRoutes = (app) => {
             200: t.Object({
                 status: t.String({ default: "success" }),
                 message: t.String({ default: "Users retrieved successfully" }),
+                count: t.Number(),
                 data: t.Array(
                     t.Object({
                         id: t.Number(),

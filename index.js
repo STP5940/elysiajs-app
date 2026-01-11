@@ -55,6 +55,21 @@ const app = new Elysia()
             },
             components: {
                 securitySchemes: {
+
+                    DatabaseName: {
+                        type: 'apiKey',
+                        in: 'header',
+                        name: 'x-database-name',
+                        value: 'Enter Target Database',
+                        description: 'Database Connection',
+                    },
+                    ApiKeyAuth: {
+                        type: 'apiKey',
+                        in: 'header',
+                        name: 'x-api-key',
+                        value: 'Enter Production API key',
+                        description: 'Secure Key Authentication',
+                    },
                     accessToken: {
                         type: 'http',
                         scheme: 'bearer',
@@ -62,7 +77,11 @@ const app = new Elysia()
                     }
                 }
             },
-            security: [{ accessToken: [] }],
+            security: [{
+                DatabaseName: [],
+                ApiKeyAuth: [],
+                accessToken: []
+            }],
             tags: [
                 {
                     name: "Authentication",
