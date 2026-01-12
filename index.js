@@ -37,6 +37,7 @@ const app = new Elysia()
         }
     })
     .use(swagger({
+        scalarVersion: '1.41.0',
         exclude: ["/swagger", "/"],
         autoDarkMode: true,
         documentation: {
